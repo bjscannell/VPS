@@ -13,7 +13,7 @@ source("https://raw.githubusercontent.com/bjscannell/lab_code/master/load_vps_cs
 
 dets <- load_vps_files()  %>% 
   clean_names() %>% 
-  filter(!grepl("^A69-1601", transmitter)) 
+  filter(!grepl("^A69-1601", full_id)) 
 
 
 # Read in reference data -------------------------------------------------------
@@ -27,16 +27,16 @@ Southfork_fish <- read_csv("tags/Southfork_otn_metadata_tagging.csv") %>% clean_
 LL_fish <- read_csv("tags/LLab_otn_metadata_tagging.csv") %>% clean_names() 
 
 # Orsted Sunrise fish
-
+Sunrise_fish <- read_csv("tags/Sunrise_otn_metadata_tagging.csv") %>% clean_names() 
 
 # Non Peterson Lab tags
 Other_fish <- read_csv("tags/NonPeterson_otn_metadata_tagging.csv") %>% clean_names() 
 
-tags <- rbind(NYSDEC_fish, Southfork_fish, LL_fish, Other_fish)
+tags <- rbind(NYSDEC_fish, Southfork_fish, Sunrise_fish, LL_fish, Other_fish)
 
 # Combine dataframes ------------------------------------------------------
 
 
 dets_full <- dets %>% 
-  left_join(tags, by = "transmitter", multiple = "all") %>% 
-  select(1,2,3,5,6,7,8,9,10,12,14,20,27,28,30,32,33,34,37,38,39,40,41,42,,43,45,49,50,51,53,71,72) # fuck this
+  left_join(tags, by = c("full_id" = "transmitter"), multiple = "all") %>% 
+  select(3,4,5,6,7,8,9,10,11,12,13, 19,20, 25, 26, 29,32,35,43,44,45,46,47,50,54,55,56,57,76) # fuck this
