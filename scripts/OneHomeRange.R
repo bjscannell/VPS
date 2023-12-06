@@ -3,6 +3,8 @@ library(janitor)
 library(ggplot2)
 library(sf)
 library(ctmm)
+library(scattermore)
+library(ggspatial)
 
 
 source("https://raw.githubusercontent.com/bjscannell/lab_code/master/load_vps_csvs.R")
@@ -11,13 +13,13 @@ source("https://raw.githubusercontent.com/bjscannell/lab_code/master/load_vps_cs
 # when you include more artificial reefs)
 
 
-fish <- dets %>% filter(species == "Black Sea Bass") %>% 
+fish <- dets_full %>% filter(common_name_e == "Black Sea Bass") %>% 
   rename(individual.local.identifier = full_id, 
          timestamp = time,
          location.long = longitude,
          location.lat = latitude) %>% dplyr::select(individual.local.identifier, timestamp, location.lat, location.long)
 
-ggplot(fish, aes(x = timestamp, y = individual.local.identifier)) + geom_point(size = 0.5, shape = 16)
+ggplot(fish, aes(x = timestamp, y = individual.local.identifier)) + geom_scattermore(size = 0.5, shape = 16)
 
 fish.telem <- as.telemetry(fish,timeformat="auto",timezone="UTC",projection="+proj=utm +zone=18 +datum=WGS84 +units=m +no_defs +type=crs",datum="WGS84",
              dt.hot=NA,timeout=Inf,na.rm="row",mark.rm=FALSE,keep=FALSE,drop=FALSE)
@@ -25,7 +27,7 @@ fish.telem <- as.telemetry(fish,timeformat="auto",timezone="UTC",projection="+pr
 
 
 library(ggplot2)
-leo <- fish %>% filter(individual.local.identifier == "A69-1604-7684")
+leo <- fish %>% filter(individual.local.identifier == "A69-9007-8321")
 ggplot(leo, aes(x = location.long, y = location.lat, color = individual.local.identifier)) + 
   geom_point(size = 0.5, shape = 16) + theme_bw() + coord_cartesian()
 
