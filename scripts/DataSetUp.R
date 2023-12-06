@@ -1,3 +1,13 @@
+# -------------------------------------------------------------------------
+
+# This code produces fully set up dataframe with filtered detections from 
+# VUE and IDed tags in the otn metadata tag format 
+
+# remember detection timestamps = time
+# transmitter = full_id
+# -------------------------------------------------------------------------
+
+
 library(readxl)
 library(janitor)
 library(dplyr)
@@ -40,3 +50,4 @@ tags <- rbind(NYSDEC_fish, Southfork_fish, Sunrise_fish, LL_fish, Other_fish)
 dets_full <- dets %>% 
   left_join(tags, by = c("full_id" = "transmitter"), multiple = "all") %>% 
   select(3,4,5,6,7,8,9,10,11,12,13, 19,20, 25, 26, 29,32,35,43,44,45,46,47,50,54,55,56,57,76) # fuck this
+

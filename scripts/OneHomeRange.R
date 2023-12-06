@@ -27,7 +27,7 @@ fish.telem <- as.telemetry(fish,timeformat="auto",timezone="UTC",projection="+pr
 
 
 library(ggplot2)
-leo <- fish %>% filter(individual.local.identifier == "A69-9007-8321")
+leo <- fish %>% filter(individual.local.identifier == "A69-1604-7684")
 ggplot(leo, aes(x = location.long, y = location.lat, color = individual.local.identifier)) + 
   geom_point(size = 0.5, shape = 16) + theme_bw() + coord_cartesian()
 
